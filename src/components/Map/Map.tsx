@@ -1,19 +1,18 @@
 import React from 'react';
-import ReactBingMap from "@3acaga/react-bing-maps";
+import ReactBingMap, {Pushpin} from "@3acaga/react-bing-maps";
+import {Coordinate} from "../../interfaces";
 
 interface Props {
-
+  coordinates: Coordinate[]
 }
 
-const Map: React.FC<Props> = () => {
+const Map: React.FC<Props> = ({ coordinates }) => {
   return (
     <div style={{height: '700px'}}>
       <ReactBingMap apiKey={process.env.REACT_APP_BING_API_KEY as string}>
-        {/*<Pushpin location={start} />*/}
-
-        {/*<Polyline path={[start, end]} />*/}
-
-        {/*<Pushpin location={end} />*/}
+        {coordinates.map(coordinate => {
+          return <Pushpin location={coordinate} />
+        })}
       </ReactBingMap>
     </div>
   );

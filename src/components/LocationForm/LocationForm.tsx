@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
+import { Coordinate } from "../../interfaces";
 
 interface Props {
-
+  setCoordinates: React.Dispatch<React.SetStateAction<Coordinate[]>>
 }
 
-interface Coordinates {
-  lon: string;
-  lat: string
-}
+const LocationForm: React.FC<Props> = ({ setCoordinates }) => {
 
-const LocationForm: React.FC<Props> = () => {
-
-  const [coordinate, setCoordinate] = useState<Coordinates>({lon: '', lat: ''});
-  const handleAddPoint = () => {}
+  const [coordinate, setCoordinate] = useState<Coordinate>({longitude: 0, latitude: 0});
+  const handleAddPoint = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setCoordinates(prev => {
+      return [
+        ...prev,
+        coordinate
+      ]
+    })
+  }
 
   return (
     <div>
@@ -22,8 +26,8 @@ const LocationForm: React.FC<Props> = () => {
           Longitude:
           <input
             type="number"
-            value={coordinate.lon}
-            onChange={e => setCoordinate({ ...coordinate, lon: e.target.value })}
+            value={coordinate.longitude}
+            onChange={e => setCoordinate({ ...coordinate, longitude: Number(e.target.value) })}
           />
         </label>
 
@@ -31,8 +35,8 @@ const LocationForm: React.FC<Props> = () => {
           Latitude:
           <input
             type="number"
-            value={coordinate.lat}
-            onChange={e => setCoordinate({ ...coordinate, lat: e.target.value })}
+            value={coordinate.latitude}
+            onChange={e => setCoordinate({ ...coordinate, latitude: Number(e.target.value) })}
           />
         </label>
 
